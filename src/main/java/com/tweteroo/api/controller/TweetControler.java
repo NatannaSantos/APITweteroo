@@ -9,25 +9,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tweteroo.api.dto.UserDTO;
-import com.tweteroo.api.model.Users;
-import com.tweteroo.api.service.UserService;
-
+import com.tweteroo.api.dto.TweetsDTO;
+import com.tweteroo.api.model.Tweets;
+import com.tweteroo.api.service.TweetService;
 
 @RestController
-@RequestMapping("/sign-up")
-public class UserController {
-
+@RequestMapping("/tweets")
+public class TweetControler {
+    
     @Autowired
-    private UserService service;
+    private TweetService service;
 
     @PostMapping
-    public void createUser(@RequestBody UserDTO req){
-       service.create(req);        
+    public void createTweet(@RequestBody TweetsDTO req){
+        service.create(req);
     }
 
     @GetMapping
-    public List<Users> listAll(){
+    public List<Tweets> listAll(){
         return service.findAll();
     }
 }
