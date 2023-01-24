@@ -3,6 +3,8 @@ package com.tweteroo.api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,8 +26,9 @@ public class UserController {
     private UserService service;
 
     @PostMapping
-    public void createUser(@RequestBody @Valid UserDTO req){
-       service.create(req);        
+    public ResponseEntity<?>  createUser(@RequestBody @Valid UserDTO req){
+      var response = service.create(req);    
+        return ResponseEntity.status(HttpStatusCode.valueOf(200) ).body("OK");
     }
 
     @GetMapping

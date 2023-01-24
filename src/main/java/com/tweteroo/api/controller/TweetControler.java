@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +22,7 @@ import com.tweteroo.api.model.Tweets;
 import com.tweteroo.api.service.TweetService;
 
 import jakarta.validation.Valid;
+import lombok.Builder;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -29,8 +33,9 @@ public class TweetControler {
     private TweetService service;
 
     @PostMapping
-    public void createTweet(@RequestBody @Valid TweetsDTO req){
-        service.create(req);
+    public ResponseEntity<?> createTweet(@RequestBody @Valid TweetsDTO req){
+        var response = service.create(req);
+        return ResponseEntity.status(HttpStatusCode.valueOf(200) ).body("OK");
     }
 
     @GetMapping
