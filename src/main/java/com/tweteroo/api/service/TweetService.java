@@ -11,38 +11,30 @@ import org.springframework.stereotype.Service;
 
 import com.tweteroo.api.dto.TweetsDTO;
 import com.tweteroo.api.model.Tweets;
-import com.tweteroo.api.repository.PageRepository;
 import com.tweteroo.api.repository.TweetRepository;
 
-import jakarta.validation.constraints.Size;
 
 @Service
 public class TweetService {
     
     @Autowired
     private TweetRepository repository;
-    @Autowired
-    private PageRepository pageRepository;
-   
+    
 
     public Tweets create(TweetsDTO dto){
         return repository.save(new Tweets(dto));
     }
 
-    // public List<Tweets> findAll(Pageable pageable){
-    //     int pag = Integer.parseInt(pageable.getPageParameter());
-    //     int size = Integer.parseInt(pageable.getSizeParameter());
-    //     PageRequest page = PageRequest.of(pag, size);
-    //     List<Tweets> tweet = repository.findByPage(pageable);
-    //     return tweet;
-    // }
     public Page<Tweets> findAll(Pageable pageable){
-       
-        return pageRepository.findByPage(pageable);
-        //  return new PageImpl<>(
-        //     pageRepository.findByPage(pageable),
-        //     pageRequest, size
-        // );
+        int page = Integer.parseInt(pageable.getPageParameter());
+        int size = 5;
+        
+        PageRequest pageRequest = PageRequest.of(page,size);         
+
+         return new PageImpl<>(
+            repository.findAll(),
+            pageRequest, size
+        );
      }
 
     public List<Tweets> getTweetByUsername(String username){

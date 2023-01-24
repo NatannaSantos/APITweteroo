@@ -39,7 +39,7 @@ public class TweetControler {
     }
 
     @GetMapping
-    public Page<Tweets> listAll(@PageableDefault(page = 0, size = 5) Pageable page){
+    public Page<Tweets> listAll(@PageableDefault(page = 0, size =5) Pageable page){
         return service.findAll(page);
     }
 
