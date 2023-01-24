@@ -3,6 +3,10 @@ package com.tweteroo.api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +18,7 @@ import com.tweteroo.api.model.Tweets;
 import com.tweteroo.api.service.TweetService;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/tweets")
 public class TweetControler {
     
@@ -26,7 +31,7 @@ public class TweetControler {
     }
 
     @GetMapping
-    public List<Tweets> listAll(){
-        return service.findAll();
+    public Page<Tweets> listAll(@PageableDefault(page = 0, size = 5) Pageable page){
+        return service.findAll(page);
     }
 }
