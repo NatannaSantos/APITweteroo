@@ -32,4 +32,8 @@ public class TweetService {
             pageRequest, size
         );
     }
+
+    public List<Tweets> getTweetByUsername(String username){
+        return repository.findByUsername(username) ;
+    }
 }
